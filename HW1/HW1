@@ -1,0 +1,27 @@
+HW1 Yi Shen(ys852)
+1. Version Control with Git:
+1.1. What is version control and why should I use it?
+Version control systems start with a base version of the document and then record changes you make each step of the way. Version control is like an unlimited ‘undo’. Version control also allows many people to work in parallel.
+1.2. Set up Git Global username and email address.
+1.3. Git init initializes a repository, and stores all its data into .git directory.
+1.4. Tracking changes by git add, git commit and git diff.
+1.5. Git diff and git checkout.
+1.6. Dummy files: .gitignore
+1.7. HTTPS and SSH
+1.8. Git clone a remote repo called origin
+1.9. Conflicts
+1.10. Open Science 
+1.11. Licensing
+
+2. Linux
+
+3. The Unix Shell
+
+4. What we covered and why does that matter?
+4.1. AWS EC2 Instances: it provides powerful and free scalable computing capacity, which is great for students like us.
+4.2. Linux Introduction and Command: Linux is free open-source operating system
+4.3. Vim: Convenient text editor in Linux
+4.4. Git and Github: Very useful tool for Version Control. If you are working together with others, Git will be the best choice. It helps us keep tracking file changes among different workers.
+4.5. Shell: it allows us to program commands in chains and the system will run them as a scripted event, like batch files.
+4.6. Python: one of the most popular programming language now due to its multiple programming paradigms, which involves imperative and object-oriented functional programming.
+
