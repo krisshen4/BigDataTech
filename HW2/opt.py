@@ -15,9 +15,7 @@ def derivative_3(x):
     :param x: a vector 3*1
     :return: rosenbrock second order derivative value for certain x
     """
-    return np.array([400 * x[0] ** 3 - 400 * x[1] * x[0] - 2 + 2 * x[0],
-                     400 * x[1] ** 3 - 400 * x[2] * x[1] - 200 * x[0] ** 2 - 2 + 202 * x[1],
-                     200 * x[2] - 200 * x[1] ** 2])
+    return np.array([400 * x[0] ** 3 - 400 * x[1] * x[0] - 2 + 2 * x[0],400 * x[1] ** 3 - 400 * x[2] * x[1] - 200 * x[0] ** 2 - 2 + 202 * x[1], 200 * x[2] - 200 * x[1] ** 2])
 
 
 if __name__ == '__main__':
