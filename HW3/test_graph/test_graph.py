@@ -19,3 +19,8 @@ class TestGraph(unittest.TestCase):
         answer = [[1., 2., 3., 4., 1.], [2., 3., 4., 1., 2.],
                    [3., 4., 1., 2., 3.], [4., 1., 2., 3., 4.]]
         assert result in answer
+
+    def test_4(self):
+        result = find_negative_cycles("path4.txt")
+        answer = []
+        assert result == answer
