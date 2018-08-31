@@ -1,43 +1,25 @@
-import pyspark
-import sys
-import numpy as np
-
-def add_v(x):
-    """
-    Add index to v
-    :param x: a vector
-    :return: a tuple containing index and value
-    """
-    for i in range(len(x)):
-        yield(i, x[i])
+from pyspark import SparkConf, SparkContext
 
 
-def add_j(x):
-    """
-    Add j to (j, (i, val)) tuple
-    :param x: a matrix
-    :return: a tuple containing index and value
-    """
-    for i in x[1]:
-        yield(i[1], (x[0], i[0]))
+def matrix_multiply(A, v):
+    conf = SparkConf()
+    sc = SparkContext(conf=conf)
+    A = sc.textFile(A)
+    v = sc.textFile(v)
+    A = A.map(lambda l: [float(i) for i in l.split(',')])
+    A = A.zipWithIndex()
+    A = A.map(lambda l: (l[1], [(col, item) for col, item in enumerate(l[0])]))
+    A = A.flatMapValues(lambda l: [i for i in l]).map(lambda l: (l[1][0], (l[0], l[1][1])))
+    v = v.flatMap(lambda l: [float(i) for i in l.split(',')])
+    v = v.zipWithIndex()
+    v = v.map(lambda l: (l[1], l[0]))
+    Av = A.join(v)
+    Av = Av.map(lambda l: (l[1][0][0], l[1][0][1] * l[1][1]))
+    Av = Av.reduceByKey(lambda n1, n2: n1 + n2)
+    Av = Av.map(lambda l: l[1])
+    return Av
 
 
-def matrix_multiply(file_A, file_v):
-    """
-    Multiply a matrix and a vector
-    :param A: .txt file of a matrix
-    :param v: .txt file of a vector
-    :return: .txt file of the multiply result
-    """
-    A = sc.textFile(file_A).map(lambda line: np.array([float(x) for x in line.split(",")])).cache()
-    v = sc.textFile(file_v).map(lambda line: np.array([float(x) for x in line.split(",")])).cache()
-    A = A.map(lambda x: (x[0], ((x[1+i], i) for i in range(len(x[1:])))))
-    A_j = A.flatMap(add_j)
-    v = v.flatMap(add_v)
-    A_join = A_j.join(v).map(lambda x: (x[1][0][0], x[1][0][1]*x[1][1]))
-    multiply = A_join.reduceByKey(lambda a, b: a + b).map(lambda x: x[1]).collect()
-    return multiply
-
-if __name__ == "__main__":
-    sc = pyspark.SparkContext(appName="matrix")
-    matrix_multiply(sys.argv[1], sys.argv[2])
+if __name__ == '__main__':
+    result = matrix_multiply('A.txt', 'v.txt')
+    print(result.collect())
